@@ -1,0 +1,212 @@
+﻿@page "/weather"
+@attribute [StreamRendering]
+
+<PageTitle>Snowmobiling Weather</PageTitle>
+
+<h1>Snowmobiling Weather</h1>
+
+<p>This page displays weather forecasts tailored for snowmobilers.</p>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temperature (C)</th>
+                <th>Temperature (F)</th>
+                <th>Snow Conditions</th>
+                <!-- Add new table headers for snow depth, wind conditions, etc. -->
+                <th>Snow Depth (cm)</th>
+                <th>Wind Speed (m/s)</th>
+                <!-- You can add more headers based on the data provided by the weather API -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.SnowConditions</td>
+                    <!-- Add corresponding table cells for new data -->
+                    <td>@forecast.SnowDepth</td>
+                    <td>@forecast.WindSpeed</td>
+                    <!-- You can add more cells based on the data provided by the weather API -->
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private SnowmobilingForecast[]? forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Simulate asynchronous loading to demonstrate streaming rendering
+        await Task.Delay(500);
+
+        var startDate = DateOnly.FromDateTime(DateTime.Now);
+        // Here you would call the weather API to get detailed forecasts
+        // Replace the following mock data with actual data retrieved from the API
+        forecasts = Enumerable.Range(1, 5).Select(index => new SnowmobilingForecast
+            {
+                Date = startDate.AddDays(index),
+                TemperatureC = Random.Shared.Next(-20, 5),
+                SnowConditions = "Packed Powder", // Mock data
+                SnowDepth = Random.Shared.Next(5, 100), // Mock data
+                WindSpeed = Random.Shared.Next(0, 20) // Mock data
+            }).ToArray();
+    }
+
+    private class SnowmobilingForecast
+    {
+        public DateOnly Date { get; set; }
+        public int TemperatureC { get; set; }
+        public string? SnowConditions { get; set; }
+        // Add properties for snow depth, wind speed, etc.
+        public int SnowDepth { get; set; }
+        public int WindSpeed { get; set; }
+        // You can add more properties based on the data provided by the weather API
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+}
+
+
+
+@* @page "/weather"
+@attribute [StreamRendering]
+
+<PageTitle>Snowmobiling Weather</PageTitle>
+
+<h1>Snowmobiling Weather</h1>
+
+<p>This page displays weather forecasts tailored for snowmobilers.</p>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temperature (C)</th>
+                <th>Temperature (F)</th>
+                <th>Snow Conditions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.SnowConditions</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private SnowmobilingForecast[]? forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Simulate asynchronous loading to demonstrate streaming rendering
+        await Task.Delay(500);
+
+        var startDate = DateOnly.FromDateTime(DateTime.Now);
+        var snowConditions = new[] { "Fresh Powder", "Packed Powder", "Powder Over Packed", "Icy", "Slushy", "No Snow" };
+        forecasts = Enumerable.Range(1, 5).Select(index => new SnowmobilingForecast
+            {
+                Date = startDate.AddDays(index),
+                TemperatureC = Random.Shared.Next(-20, 5),
+                SnowConditions = snowConditions[Random.Shared.Next(snowConditions.Length)]
+            }).ToArray();
+    }
+
+    private class SnowmobilingForecast
+    {
+        public DateOnly Date { get; set; }
+        public int TemperatureC { get; set; }
+        public string? SnowConditions { get; set; }
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+} *@
+
+
+@* @page "/weather"
+@attribute [StreamRendering]
+
+<PageTitle>Weather</PageTitle>
+
+<h1>Weather</h1>
+
+<p>This component demonstrates showing data.</p>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private WeatherForecast[]? forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Simulate asynchronous loading to demonstrate streaming rendering
+        await Task.Delay(500);
+
+        var startDate = DateOnly.FromDateTime(DateTime.Now);
+        var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
+        forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        {
+            Date = startDate.AddDays(index),
+            TemperatureC = Random.Shared.Next(-20, 55),
+            Summary = summaries[Random.Shared.Next(summaries.Length)]
+        }).ToArray();
+    }
+
+    private class WeatherForecast
+    {
+        public DateOnly Date { get; set; }
+        public int TemperatureC { get; set; }
+        public string? Summary { get; set; }
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+} *@

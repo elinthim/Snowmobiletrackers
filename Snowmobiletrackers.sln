@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowmobiletrackers", "Snowmobiletrackers\Snowmobiletrackers.csproj", "{5E7776BE-357A-46EF-A3D2-8CA60E6D7F18}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowmobiletrackers.Client", "Snowmobiletrackers.Client\Snowmobiletrackers.Client.csproj", "{E6B43253-EE63-4ADF-985E-0402FDF8B986}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5E7776BE-357A-46EF-A3D2-8CA60E6D7F18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E7776BE-357A-46EF-A3D2-8CA60E6D7F18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E7776BE-357A-46EF-A3D2-8CA60E6D7F18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E7776BE-357A-46EF-A3D2-8CA60E6D7F18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6B43253-EE63-4ADF-985E-0402FDF8B986}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6B43253-EE63-4ADF-985E-0402FDF8B986}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6B43253-EE63-4ADF-985E-0402FDF8B986}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6B43253-EE63-4ADF-985E-0402FDF8B986}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A83827CB-4AC6-43A0-A69A-45793C4863FC}
+	EndGlobalSection
+EndGlobal
