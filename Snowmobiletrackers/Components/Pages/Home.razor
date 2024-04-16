@@ -2,11 +2,12 @@
 @using Microsoft.AspNetCore.SignalR.Client
 @using Models
 @inject NavigationManager NavigationManager
-@implements IAsyncDisposable
+@implements IAsyncDisposable 
 @* @rendermode InteractiveAuto
- *@
+ *@ 
 
-<div class="container overflow-auto-shadow-sm p-3 mb-5 bg-white rounded" style="height: 500px;">
+
+ <div class="container overflow-auto-shadow-sm p-3 mb-5 bg-white rounded" style="height: 500px;">
     @if (!userMessages.Any())
     {
         <p>No messages yet, start chatting!</p>
@@ -94,4 +95,4 @@
         }
     }
 }
-
+ 

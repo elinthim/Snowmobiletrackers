@@ -1,7 +1,104 @@
 ﻿@page "/counter"
 @rendermode InteractiveAuto
+@* @page "/snowmobile-game" *@
+@using System.Timers
 
-<PageTitle>Counter</PageTitle>
+<PageTitle>Snowmobile Game</PageTitle>
+
+<h1>Snowmobile Game</h1>
+
+<p role="status">Score: @score</p>
+
+<div style="position:relative; width:500px; height:500px; background-color:lightblue;" @onkeydown="HandleKeyDown">
+    <div id="snowmobile" style="position:absolute; top:@snowmobileTop%; left:@snowmobileLeft%; width:50px; height:50px; background-color:red;"></div>
+    @foreach (var obstacle in obstacles)
+    {
+        <div class="obstacle" style="position:absolute; top:@obstacle.Top%; left:@obstacle.Left%; width:50px; height:50px; background-color:green;"></div>
+    }
+</div>
+
+<button class="btn btn-primary" @onclick="StartGame">Start Game</button>
+
+@code {
+    private double snowmobileTop = 50;
+    private double snowmobileLeft = 50;
+    private int score = 0;
+    private List<Obstacle> obstacles = new List<Obstacle>();
+    private Timer timer;
+
+    private class Obstacle
+    {
+        public double Top { get; set; }
+        public double Left { get; set; }
+    }
+
+    private void StartGame()
+    {
+        score = 0;
+        obstacles.Clear();
+        MoveSnowmobile();
+        GenerateObstacles();
+
+        timer = new Timer(1000);
+        timer.Elapsed += (sender, e) => { MoveObstacles(); };
+        timer.Enabled = true;
+    }
+
+    private void MoveSnowmobile()
+    {
+        // No need to move snowmobile initially
+    }
+
+    private void GenerateObstacles()
+    {
+        Random random = new Random();
+        for (int i = 0; i < 5; i++)
+        {
+            obstacles.Add(new Obstacle
+                {
+                    Top = random.NextDouble() * 90,
+                    Left = random.NextDouble() * 90
+                });
+        }
+    }
+
+    private void MoveObstacles()
+    {
+        foreach (var obstacle in obstacles)
+        {
+            obstacle.Left -= 10; // Move obstacles to the left
+            if (obstacle.Left < 0)
+            {
+                obstacle.Left = 100; // Reset obstacle position if it goes out of the game area
+                score++; // Increase score if obstacle is avoided
+            }
+        }
+        StateHasChanged();
+    }
+
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        switch (e.Key)
+        {
+            case "ArrowUp":
+                snowmobileTop -= 5; // Move snowmobile up
+                break;
+            case "ArrowDown":
+                snowmobileTop += 5; // Move snowmobile down
+                break;
+            case "ArrowLeft":
+                snowmobileLeft -= 5; // Move snowmobile left
+                break;
+            case "ArrowRight":
+                snowmobileLeft += 5; // Move snowmobile right
+                break;
+        }
+    }
+}
+
+
+
+@* <PageTitle>Counter</PageTitle>
 
 <h1>Counter</h1>
 
@@ -16,4 +113,4 @@
     {
         currentCount++;
     }
-}
+} *@

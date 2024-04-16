@@ -3,8 +3,112 @@
 @implements IAsyncDisposable
 @page "/map"
 
-<h3>Blazor Map with Leaflet Page with and OpenStreetMap openstreetmap</h3>
-<div id ="map" style ="width:600px; height:400px;"></div>
+<h3>Blazor map with Leaflet and openstreetmap</h3>
+
+<div class="fake-map">
+    <!-- Placera dina markörer här med div-element som marker klass -->
+    <div class="marker" style="top: 40%; left: 30%;"></div>
+    <div class="marker" style="top: 60%; left: 70%;"></div>
+</div>
+
+<video width="500" controls>
+    <source src="https://www.mapbox.com/bites/00188/patricia_nasa.webm" type="video/webm">
+    <source src="https://www.mapbox.com/bites/00188/patricia_nasa.mp4" type="video/mp4">
+</video>
+
+
+<div class="fake-map">
+    <!-- Placera dina markörer här med div-element som marker klass -->
+    <div class="marker" style="top: 40%; left: 30%;"></div>
+    <div class="marker" style="top: 60%; left: 70%;"></div>
+</div>
+
+
+
+
+
+<style>
+    /* Låtsaskarta */
+    .fake-map {
+        display: none; /* Gömmer låtsaskartan när Leaflet-kartan visas */
+    }
+
+    .marker {
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        border-radius: 50%;
+        position: absolute;
+    }
+</style>
+
+<script>
+    window.onload = function () {
+        var map = L.map('map').setView([37.8, -96], 4);
+
+        var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        var imageUrl = 'https://maps.lib.utexas.edu/maps/historical/newark_nj_1922.jpg';
+        var errorOverlayUrl = 'https://cdn-icons-png.flaticon.com/512/110/110686.png';
+        var altText = 'Image of Newark, N.J. in 1922. Source: The University of Texas at Austin, UT Libraries Map Collection.';
+        var latLngBounds = L.latLngBounds([[40.799311, -74.118464], [40.68202047785919, -74.33]]);
+
+        var imageOverlay = L.imageOverlay(imageUrl, latLngBounds, {
+            opacity: 0.8,
+            errorOverlayUrl: errorOverlayUrl,
+            alt: altText,
+            interactive: true
+        }).addTo(map);
+    };
+</script>
+
+
+<script>
+    window.onload = function () {
+        var map = L.map('map').setView([37.8, -96], 4);
+
+        var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        var videoOverlay = L.videoOverlay('https://www.mapbox.com/bites/00188/patricia_nasa.mp4', [[37.8, -96], [37.9, -95]]).addTo(map);
+
+        videoOverlay.on('load', function () {
+            var MyPauseControl = L.Control.extend({
+                onAdd: function () {
+                    var button = L.DomUtil.create('button');
+                    button.title = 'Pause';
+                    button.innerHTML = '<span aria-hidden="true">⏸</span>';
+                    L.DomEvent.on(button, 'click', function () {
+                        videoOverlay.getElement().pause();
+                    });
+                    return button;
+                }
+            });
+
+            var MyPlayControl = L.Control.extend({
+                onAdd: function () {
+                    var button = L.DomUtil.create('button');
+                    button.title = 'Play';
+                    button.innerHTML = '<span aria-hidden="true">▶️</span>';
+                    L.DomEvent.on(button, 'click', function () {
+                        videoOverlay.getElement().play();
+                    });
+                    return button;
+                }
+            });
+
+            var pauseControl = (new MyPauseControl()).addTo(map);
+            var playControl = (new MyPlayControl()).addTo(map);
+        });
+    };
+</script>
+
+
 
 @code {
     private IJSObjectReference? module;
